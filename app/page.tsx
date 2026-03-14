@@ -242,7 +242,7 @@ export default function HomePage() {
       <footer id="contact" ref={footerReveal.ref} style={{ borderTop: "1px solid var(--border)", padding: "6rem 2.5rem 4rem", position: "relative", overflow: "hidden" }}>
         <motion.div initial={{ opacity: 0 }} animate={footerReveal.isInView ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.8 }} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "4rem" }}>
           <div>
-            <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Available for freelance</p>
+            <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Available for work</p>
             <a href="mailto:maleektaiwo164@gmail.com" style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--fg-muted)", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: "4px", transition: "color 0.2s ease, textDecorationColor 0.2s ease" }} onMouseEnter={(e) => { (e.target as HTMLAnchorElement).style.color = "var(--fg)"; (e.target as HTMLAnchorElement).style.textDecorationColor = "var(--accent)"; }} onMouseLeave={(e) => { (e.target as HTMLAnchorElement).style.color = "var(--fg-muted)"; (e.target as HTMLAnchorElement).style.textDecorationColor = "var(--border)"; }}>
               maleektaiwo164@gmail.com
             </a>
