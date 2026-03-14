@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:          #0a0a0a;
+  --bg-surface:  #111111;
+  --bg-elevated: #1a1a1a;
+
+  --fg:          #f0ece3;
+  --fg-muted:    #8a8680;
+  --fg-faint:    #9ca3af;
+
+  --accent:      #c8f542;   /* electric lime — your hero accent */
+  --accent-warm: #f5a623;   /* secondary amber */
+  --accent-cool: #42a8f5;   /* optional tertiary blue */
+
+  --border:      #2a2926;
+  --border-loud: #f0ece3;
+
+  --radius-sm:   2px;
+  --radius-md:   4px;
+
+  --font-display: 'Editorial New', 'Playfair Display', Georgia, serif;
+  --font-body:    'Suisse Int\'l', 'DM Sans', 'Helvetica Neue', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back:    cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+/* ─── Hide Scrollbar (all browsers) ────────────────────────── */
+html,
+body {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE / Edge legacy */
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                  /* Chrome / Safari / Opera */
+}
+
+/* ─── Document Body ─────────────────────────────────────────── */
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+/* ─── Custom Text Selection ─────────────────────────────────── */
+::selection {
+  background-color: var(--accent);
+  color: #0a0a0a;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background-color: var(--accent);
+  color: #0a0a0a;
+  text-shadow: none;
+}
+
+/* ─── Typography Scale ──────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+p {
+  color: var(--fg-muted);
+  max-width: 65ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Utility: Noise Grain Overlay ──────────────────────────── */
+/* Apply class="grain" to any element for a subtle film-grain texture */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain-shift 0.5s steps(2) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-1%, 1%); }
+  50%  { transform: translate(1%, -1%); }
+  75%  { transform: translate(-1%, -1%); }
+  100% { transform: translate(1%, 1%); }
+}
+
+/* ─── Utility: Accent Underline ─────────────────────────────── */
+.underline-accent {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+/* ─── Focus Styles ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
