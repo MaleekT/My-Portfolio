@@ -1,33 +1,33 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projectsData } from "./projectsData";
 
-// Animation Variants (Framer Motion for upper sections)
-const navVariants = {
+// Animation Variants with strict TypeScript typing
+const navVariants: Variants = {
   hidden: { opacity: 0, y: -20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const fadeUpVariants = {
+const fadeUpVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1, y: 0, transition: { duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 60 },
   visible: (i: number) => ({
     opacity: 1, y: 0, transition: { duration: 0.9, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
-// Refined, Human-Sounding Process Data (Reduced length)
+// Refined, Human-Sounding Process Data
 const processData = [
   {
     id: "01",
@@ -37,17 +37,17 @@ const processData = [
   {
     id: "02",
     title: "UI/UX Design in Figma",
-    description: "I make use of Figma to design a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a custom interface that users actually remember."
+    description: "This is where we get creative. I use Figma to craft a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a bespoke interface that users actually remember."
   },
   {
     id: "03",
     title: "Webflow Development",
-    description: "I build the final product in Webflow for unmatched speed and reliability. This ensures your site loads instantly, scales perfectly across devices, and remains incredibly easy for you to update as your business grows."
+    description: "I engineer the final product in Webflow for unmatched speed and reliability. This ensures your site loads instantly, scales perfectly across devices, and remains incredibly easy for you to update as your business grows."
   },
   {
     id: "04",
     title: "Custom Code & Integration",
-    description: "To push beyond standard limits, I integrate custom JavaScript and CSS. This allows for complex, tailored animations and seamless third-party API connections, ensuring your website feels truly premium and unique."
+    description: "To push beyond standard limits, I integrate custom JavaScript and CSS. This allows for complex, bespoke animations and seamless third-party API connections, ensuring your website feels truly premium and unique."
   }
 ];
 
@@ -78,20 +78,19 @@ export default function HomePage() {
         rotateZ: 5,
         duration: 1.2,
         ease: "power4.out",
-        stagger: 0.05, // This staggers the reveal from left to right perfectly
+        stagger: 0.05,
         scrollTrigger: {
           trigger: footerTextRef.current,
-          start: "top 85%", // Triggers when the text is 85% down the screen
+          start: "top 85%",
         }
       });
     }, footerTextRef);
 
-    return () => ctx.revert(); // Cleanup on unmount
+    return () => ctx.revert();
   }, []);
 
   return (
     <main className="grain" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
-      {/* Inject CSS for the blinking dot */}
       <style>{`
         @keyframes blink {
           0%, 100% { opacity: 1; }
@@ -228,7 +227,6 @@ export default function HomePage() {
               flexWrap: "wrap",
             }}
           >
-            {/* We map through the characters to allow GSAP to animate them one by one */}
             {"LET'S BUILD".split("").map((char, index) => (
               <span key={index} style={{ display: "inline-block", overflow: "hidden" }}>
                 <span 
