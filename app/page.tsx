@@ -164,13 +164,16 @@ export default function HomePage() {
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.1em" }}>{projectsData.length} Projects</span>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "1.5rem", rowGap: "2.5rem" }}>
+        {/* Mobile-Responsive Tailwind Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-y-10">
           {projectsData.map((project, i) => {
-            const colSpans = ["1 / 9", "9 / 13", "1 / 5", "5 / 13"];
-            const colSpan = colSpans[i] ?? "1 / 13";
+            // Mobile: defaults to 1 col. Desktop: asymmetrical col spans.
+            const colClasses = ["md:col-span-8", "md:col-span-4", "md:col-span-4", "md:col-span-8"];
+            const spanClass = colClasses[i] ?? "md:col-span-12";
             const isWide = i === 0 || i === 3;
+            
             return (
-              <motion.div key={project.id} custom={i} variants={cardVariants} initial="hidden" animate={projectsInView ? "visible" : "hidden"} style={{ gridColumn: colSpan }}>
+              <motion.div key={project.id} custom={i} variants={cardVariants} initial="hidden" animate={projectsInView ? "visible" : "hidden"} className={spanClass}>
                 <ProjectCard project={project} isWide={isWide} index={i} />
               </motion.div>
             );
@@ -261,11 +264,19 @@ type Project = (typeof projectsData)[number];
 function ProjectCard({ project, isWide, index }: { project: Project; isWide: boolean; index: number }) {
   return (
     <motion.a href={project.url} target="_blank" rel="noopener noreferrer" initial={{ borderColor: "var(--border)" }} whileHover={{ borderColor: "var(--accent)" }} transition={{ duration: 0.25, ease: "easeOut" }} style={{ display: "block", borderWidth: "1px", borderStyle: "solid", background: "var(--bg-surface)", overflow: "hidden", textDecoration: "none", position: "relative" }}>
-      <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }} style={{ width: "100%", aspectRatio: isWide ? "16 / 9" : "4 / 5", background: "var(--bg-elevated)", position: "relative", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      
+      {/* Aspect Ratio controlled by Tailwind classes for responsiveness */}
+      <motion.div 
+        whileHover={{ scale: 1.02 }} 
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }} 
+        className={isWide ? "aspect-[4/3] md:aspect-[16/9]" : "aspect-[4/3] md:aspect-[4/5]"}
+        style={{ width: "100%", background: "var(--bg-elevated)", position: "relative", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         <img src={project.image} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", zIndex: 2 }} onError={(e) => (e.currentTarget.style.display = 'none')} />
         <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px)`, opacity: 0.4 }} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.18em", textTransform: "uppercase", position: "relative", zIndex: 1, border: "1px solid var(--border)", padding: "0.4rem 0.8rem", background: "var(--bg)" }}>Screenshot</span>
       </motion.div>
+      
       <div style={{ padding: "1.6rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--accent)", letterSpacing: "0.15em", textTransform: "uppercase" }}>0{index + 1}</span>
