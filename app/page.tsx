@@ -91,6 +91,7 @@ export default function HomePage() {
 
   return (
     <main className="grain" style={{ background: "var(--bg)", minHeight: "100dvh" }}>
+      {/* Custom CSS to strictly control Mobile vs Desktop Layout without touching original desktop styling */}
       <style>{`
         @keyframes blink {
           0%, 100% { opacity: 1; }
@@ -98,6 +99,38 @@ export default function HomePage() {
         }
         .blinking-dot {
           animation: blink 1.2s step-end infinite;
+        }
+
+        /* --- MOBILE DEFAULTS --- */
+        .project-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem; /* Mobile spacing matches process section */
+        }
+        .project-card-container {
+          flex-direction: column-reverse; /* Details top, Image bottom on mobile */
+        }
+        .project-image-wrapper {
+          aspect-ratio: 16 / 9; /* All images same size on mobile */
+        }
+
+        /* --- DESKTOP ORIGINAL LAYOUT --- */
+        @media (min-width: 768px) {
+          .project-grid {
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 1.5rem;
+            row-gap: 2.5rem;
+          }
+          .project-card-0 { grid-column: 1 / 9; }
+          .project-card-1 { grid-column: 9 / 13; }
+          .project-card-2 { grid-column: 1 / 5; }
+          .project-card-3 { grid-column: 5 / 13; }
+
+          .project-card-container {
+            flex-direction: column; /* Image top, Details bottom on desktop */
+          }
+          .project-image-wide { aspect-ratio: 16 / 9; }
+          .project-image-narrow { aspect-ratio: 4 / 5; }
         }
       `}</style>
 
@@ -164,16 +197,12 @@ export default function HomePage() {
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.1em" }}>{projectsData.length} Projects</span>
         </motion.div>
 
-        {/* Mobile-Responsive Tailwind Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-y-10">
+        {/* Custom CSS Grid (Restored to perfectly match original desktop logic) */}
+        <div className="project-grid">
           {projectsData.map((project, i) => {
-            // Mobile: defaults to 1 col. Desktop: asymmetrical col spans.
-            const colClasses = ["md:col-span-8", "md:col-span-4", "md:col-span-4", "md:col-span-8"];
-            const spanClass = colClasses[i] ?? "md:col-span-12";
             const isWide = i === 0 || i === 3;
-            
             return (
-              <motion.div key={project.id} custom={i} variants={cardVariants} initial="hidden" animate={projectsInView ? "visible" : "hidden"} className={spanClass}>
+              <motion.div key={project.id} custom={i} variants={cardVariants} initial="hidden" animate={projectsInView ? "visible" : "hidden"} className={`project-card-${i}`}>
                 <ProjectCard project={project} isWide={isWide} index={i} />
               </motion.div>
             );
@@ -263,18 +292,18 @@ type Project = (typeof projectsData)[number];
 
 function ProjectCard({ project, isWide, index }: { project: Project; isWide: boolean; index: number }) {
   return (
-    <motion.a href={project.url} target="_blank" rel="noopener noreferrer" initial={{ borderColor: "var(--border)" }} whileHover={{ borderColor: "var(--accent)" }} transition={{ duration: 0.25, ease: "easeOut" }} style={{ display: "block", borderWidth: "1px", borderStyle: "solid", background: "var(--bg-surface)", overflow: "hidden", textDecoration: "none", position: "relative" }}>
+    <motion.a href={project.url} target="_blank" rel="noopener noreferrer" initial={{ borderColor: "var(--border)" }} whileHover={{ borderColor: "var(--accent)" }} transition={{ duration: 0.25, ease: "easeOut" }} className="project-card-container" style={{ display: "flex", borderWidth: "1px", borderStyle: "solid", background: "var(--bg-surface)", overflow: "hidden", textDecoration: "none", position: "relative" }}>
       
-      {/* Aspect Ratio controlled by Tailwind classes for responsiveness */}
+      {/* CSS classes automatically handle desktop vs mobile aspect ratio */}
       <motion.div 
         whileHover={{ scale: 1.02 }} 
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }} 
-        className={isWide ? "aspect-[4/3] md:aspect-[16/9]" : "aspect-[4/3] md:aspect-[4/5]"}
+        className={`project-image-wrapper ${isWide ? 'project-image-wide' : 'project-image-narrow'}`}
         style={{ width: "100%", background: "var(--bg-elevated)", position: "relative", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
       >
         <img src={project.image} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", zIndex: 2 }} onError={(e) => (e.currentTarget.style.display = 'none')} />
         <div style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 39px, var(--border) 40px)`, opacity: 0.4 }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.18em", textTransform: "uppercase", position: "relative", zIndex: 1, border: "1px solid var(--border)", padding: "0.4rem 0.8rem", background: "var(--bg)" }}>Screenshot</span>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-faint)", letterSpacing: "0.18em", textTransform: "uppercase", position: "relative", zIndex: 1, border: "1px solid var(--border)", padding: "0.4rem 0.8rem", background: "var(--bg)" }}>Screenshot: {project.title}</span>
       </motion.div>
       
       <div style={{ padding: "1.6rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
