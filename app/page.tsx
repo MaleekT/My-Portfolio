@@ -37,17 +37,17 @@ const processData = [
   {
     id: "02",
     title: "UI/UX Design in Figma",
-    description: "This is where we get creative. I use Figma to craft a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a bespoke interface that users actually remember."
+    description: "This is where we get creative. I use Figma to craft a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a custom interface that users actually remember."
   },
   {
     id: "03",
     title: "Webflow Development",
-    description: "I engineer the final product in Webflow for unmatched speed and reliability. This ensures your site loads instantly, scales perfectly across devices, and remains incredibly easy for you to update as your business grows."
+    description: "I build the final product in Webflow for unmatched speed and reliability. This ensures your site loads instantly, scales perfectly across devices, and remains incredibly easy for you to update as your business grows."
   },
   {
     id: "04",
     title: "Custom Code & Integration",
-    description: "To push beyond standard limits, I integrate custom JavaScript and CSS. This allows for complex, bespoke animations and seamless third-party API connections, ensuring your website feels truly premium and unique."
+    description: "To push beyond standard limits, I integrate custom JavaScript and CSS. This allows for complex, tailored animations and seamless third-party API connections, ensuring your website feels truly premium and unique."
   }
 ];
 
@@ -223,7 +223,7 @@ export default function HomePage() {
         <motion.div initial={{ opacity: 0, x: -30 }} animate={processInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "5rem", paddingBottom: "1.5rem", borderBottom: "1px solid var(--border)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
             <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--accent)", letterSpacing: "0.15em", textTransform: "uppercase" }}>02</span>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 2.5vw, 2rem)", fontWeight: 400, letterSpacing: "-0.02em", color: "var(--fg)" }}>Process and Arsenal</h2>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 2.5vw, 2rem)", fontWeight: 400, letterSpacing: "-0.02em", color: "var(--fg)" }}>My Process</h2>
           </div>
         </motion.div>
 
