@@ -37,7 +37,7 @@ const processData = [
   {
     id: "02",
     title: "UI/UX Design in Figma",
-    description: "This is where we get creative. I use Figma to craft a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a custom interface that users actually remember."
+    description: "This is where creativity comes in. I use Figma to craft a distinct, high-fidelity look for your brand. I focus heavily on typography, spacing, and pacing to build a custom interface that users actually remember."
   },
   {
     id: "03",
